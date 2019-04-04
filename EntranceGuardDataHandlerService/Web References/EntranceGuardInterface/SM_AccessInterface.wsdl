@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnterLib">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnterLibResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnterLibResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OutLib">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="OutLibResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OutLibResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBlacklist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBlacklistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBlacklistResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnterLibSoapIn">
+    <wsdl:part name="parameters" element="tns:EnterLib" />
+  </wsdl:message>
+  <wsdl:message name="EnterLibSoapOut">
+    <wsdl:part name="parameters" element="tns:EnterLibResponse" />
+  </wsdl:message>
+  <wsdl:message name="OutLibSoapIn">
+    <wsdl:part name="parameters" element="tns:OutLib" />
+  </wsdl:message>
+  <wsdl:message name="OutLibSoapOut">
+    <wsdl:part name="parameters" element="tns:OutLibResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBlacklist" />
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBlacklistResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SM_AccessInterfaceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnterLib">
+      <wsdl:input message="tns:EnterLibSoapIn" />
+      <wsdl:output message="tns:EnterLibSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="OutLib">
+      <wsdl:input message="tns:OutLibSoapIn" />
+      <wsdl:output message="tns:OutLibSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklist">
+      <wsdl:input message="tns:GetBlacklistSoapIn" />
+      <wsdl:output message="tns:GetBlacklistSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SM_AccessInterfaceSoap" type="tns:SM_AccessInterfaceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnterLib">
+      <soap:operation soapAction="http://tempuri.org/EnterLib" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutLib">
+      <soap:operation soapAction="http://tempuri.org/OutLib" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklist">
+      <soap:operation soapAction="http://tempuri.org/GetBlacklist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SM_AccessInterfaceSoap12" type="tns:SM_AccessInterfaceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnterLib">
+      <soap12:operation soapAction="http://tempuri.org/EnterLib" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutLib">
+      <soap12:operation soapAction="http://tempuri.org/OutLib" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBlacklist">
+      <soap12:operation soapAction="http://tempuri.org/GetBlacklist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SM_AccessInterface">
+    <wsdl:port name="SM_AccessInterfaceSoap" binding="tns:SM_AccessInterfaceSoap">
+      <soap:address location="http://localhost:21891/WebService/SM_AccessInterface.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SM_AccessInterfaceSoap12" binding="tns:SM_AccessInterfaceSoap12">
+      <soap12:address location="http://localhost:21891/WebService/SM_AccessInterface.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
