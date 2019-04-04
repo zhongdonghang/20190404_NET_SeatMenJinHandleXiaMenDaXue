@@ -115,7 +115,7 @@ namespace CardLogSyncService
 
                 strSqls.Append("SELECT ID as VisitID,学号 as CardNo,姓名 as VisierName,类别 as type,部门 as dept,'passed',进入时间 as VisitTime,闸机名称 as ChannelNo,'1' as ");
                 strSqls.Append(" EnterOrExit from View_SeatLog");
-                strSqls.Append(" WHERE ID > "+ lastID + " AND datediff(second, 进入时间, getdate()) <= "+ beforesecond + "");
+                strSqls.Append(" WHERE ID > "+ lastID + " and 学号<>'' AND datediff(second, 进入时间, getdate()) <= " + beforesecond + "");
 
                 AccessConn.Open();
                 SqlDataAdapter command = new SqlDataAdapter(strSqls.ToString(), AccessConn);
