@@ -153,53 +153,61 @@ namespace EntranceGuardDataHandlerService
                 //如果读者学号不存在，跳过，不做处理
                 if (string.IsNullOrEmpty(model.CardNo)) continue;
 
-                //判断是否处理，是否为入馆通道，有效时间。
-                if (!model.HandleFlag && ts.TotalMinutes < ivalidMinutes)
+                if (true)//model.CardNo == "reader" || model.CardNo == "7302" || model.CardNo == "7607")
                 {
-                    string strResult = "";
-                    try
-                    {//调用通道机的处理接口，并记录返回结果
-                        if (model.Enter == EnterState.Enter)
+                    //判断是否处理，是否为入馆通道，有效时间。
+                    if (!model.HandleFlag && ts.TotalMinutes < ivalidMinutes)
+                    {
+                        string strResult = "";
+                        try
+                        {//调用通道机的处理接口，并记录返回结果
+                            if (model.Enter == EnterState.Enter)
+                            {
+                                strResult = eg.EnterLib(model.CardNo);
+                                SeatManage.SeatManageComm.WriteLog.Write("处理读者" + model.CardNo + "进馆处理");
+                                PostProgress("处理读者" + model.CardNo + "进馆处理");
+                            }
+                            else
+                            {
+                                strResult = eg.OutLib(model.CardNo);
+                                SeatManage.SeatManageComm.WriteLog.Write("处理读者" + model.CardNo + "出馆处理");
+                                PostProgress("处理读者" + model.CardNo + "出馆处理");
+                            }
+                        }
+                        catch (Exception ex)
                         {
-                            strResult = eg.EnterLib(model.CardNo);
-                            SeatManage.SeatManageComm.WriteLog.Write("处理读者" + model.CardNo + "进馆处理");
-                            PostProgress("处理读者" + model.CardNo + "进馆处理");
+                            SeatManage.SeatManageComm.WriteLog.Write(string.Format("处理失败，记录Id:{0}  错误信息:{1}", model.ID, ex.ToString()));
+                            PostProgress(string.Format("处理失败，记录Id:{0}  错误信息:{1}", model.ID, ex.Message));
+                            break;
                         }
-                        else
+                        try
                         {
-                            strResult = eg.OutLib(model.CardNo);
-                            SeatManage.SeatManageComm.WriteLog.Write("处理读者" + model.CardNo + "出馆处理");
-                            PostProgress("处理读者" + model.CardNo + "出馆处理");
+                            //解析返回结果
+                            HandleResultModel result = WebServiceReturnValueHandler.EnterLibHandle(strResult);
+                            if (!string.IsNullOrEmpty(result.Error))
+                            {//如果不为空，则说明处理错误
+                                SeatManage.SeatManageComm.WriteLog.Write(string.Format("处理错误，记录Id:{0}  错误信息:{1}", model.ID, result.Error));
+                                PostProgress(string.Format("处理错误，记录Id:{0}  错误信息:{1}", model.ID, result.Error));
+                            }
+                            else
+                            {   //否则标识已经处理完成。
+                                PosDataMiddleTableHandler.MiddleTableHandler_New.Update(model);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        SeatManage.SeatManageComm.WriteLog.Write(string.Format("处理失败，记录Id:{0}  错误信息:{1}", model.ID, ex.ToString()));
-                        PostProgress(string.Format("处理失败，记录Id:{0}  错误信息:{1}", model.ID, ex.Message));
-                        break;
-                    }
-                    try
-                    {
-                        //解析返回结果
-                        HandleResultModel result = WebServiceReturnValueHandler.EnterLibHandle(strResult);
-                        if (!string.IsNullOrEmpty(result.Error))
-                        {//如果不为空，则说明处理错误
-                            SeatManage.SeatManageComm.WriteLog.Write(string.Format("处理错误，记录Id:{0}  错误信息:{1}", model.ID, result.Error));
-                            PostProgress(string.Format("处理错误，记录Id:{0}  错误信息:{1}", model.ID, result.Error));
+                        catch (Exception ex)
+                        {
+                            SeatManage.SeatManageComm.WriteLog.Write(ex.Message);
+                            PostProgress(ex.ToString());
+                            break;
                         }
-                        else
-                        {   //否则标识已经处理完成。
-                            PosDataMiddleTableHandler.MiddleTableHandler_New.Update(model);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        SeatManage.SeatManageComm.WriteLog.Write(ex.Message);
-                        PostProgress(ex.ToString());
-                        break;
-                    }
 
+                    }
                 }
+                else
+                {
+                    PostProgress("测试：只处理7302，7607，和reader的记录");
+                }
+                
             }
         }
 
